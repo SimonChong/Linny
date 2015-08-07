@@ -1,7 +1,7 @@
 # Linny (Work in progress)
-**A light-weight ad server**
+**A light-weight and simple micro ad server**
 
-Linny is a light weight micro ad server that is designed to serve one web display ad or campaign. It can measure simple but important statistics, such as views and conversion via click-throughs.
+Linny is a light weight and simple micro ad server that is designed to serve one web display ad or campaign. It can measure simple but important statistics, such as views and conversion via click-throughs.
 
 ## Features
 
@@ -30,26 +30,27 @@ The following are guiding principles used to design and build this system.
 When you have the prequsites in place you can follow the steps below to get the ad server running.
 
 1. Download the latest copy of Linny 
-	- (TODO linux command to download latest)
+	- wget ....(TODO URL and command to download latest)
 2. Run Linny
-	- (TODO go command to run Linny)
+	- go run ....(TODO go command to run Linny)
 
 ## Display Ad Development
 
-### Building a single web display ad
+### Building a Single Web Display Ad
 
-#### Medium rectangle ad (Med Rec 300x200 TODO check size)
+#### Medium Rectangle Ad 300x250
 
-### Building a web display ad campaign
+### Building a Web Display Ad Campaign
 
-#### Medium rectangle ad (Med Rec 300x200 TODO check size)
-#### Half Page Ad (300x600 TODO check size)
-#### Banner Ad (TODO check size)
-#### Wallpaper Ad
+#### Medium Rectangle Ad 300x250
+#### Half Page Ad 300x600
+#### Banner Ad 728x90
+#### Mobile Banner Ad 320x50
+#### Wallpaper Ad (Advanced)
 
 ### Click-through tagging / generation
 
-## Deploying to production
+## Deploying to Production
 
 
 ## About
