@@ -1,4 +1,4 @@
-# Linny
+# Linny (Work in progress)
 **A light-weight ad server**
 
 Linny is a light weight micro ad server that is designed to serve one web display ad or campaign. It can measure simple but important statistics, such as views and conversion via click-throughs.
