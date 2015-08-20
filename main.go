@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -9,36 +8,17 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/simonchong/linny/config"
+
 	"github.com/zenazn/goji"
 )
 
-type Config struct {
-	ContentRoot string
-}
-
-var conf Config
-var testvar string
+var conf config.Config
 
 func init() {
 
-	confStr, err := ioutil.ReadFile("linnyConfig.json")
-	if err != nil {
-		fmt.Println("linnyConfig.json is missing")
-		return
-	}
-	err = json.Unmarshal(confStr, &conf)
-	if err != nil {
-		fmt.Println("linnyConfig.json error:", err)
-		return
-	}
-
-	confP := &conf
-	confP.ContentRoot, err = filepath.Abs(conf.ContentRoot)
-	if err != nil {
-		fmt.Println("ContentRoot Error: ", err)
-		return
-	}
-	fmt.Println("ContentRoot: ", conf.ContentRoot)
+	conf = config.Config{}
+	conf.Init()
 }
 
 func main() {
