@@ -1,4 +1,4 @@
-package config
+package common
 
 import (
 	"encoding/json"
@@ -9,6 +9,12 @@ import (
 
 type Config struct {
 	ContentRoot string
+}
+
+func NewConfig() Config {
+	conf := Config{}
+	conf.Init()
+	return conf
 }
 
 func (c *Config) Init() {
