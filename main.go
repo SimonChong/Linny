@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/simonchong/linny/common"
+	"github.com/simonchong/linny/constants"
 	"github.com/simonchong/linny/controllers"
 
 	"github.com/zenazn/goji"
@@ -12,7 +13,8 @@ func main() {
 	config := common.NewConfig()
 	controllerFact := controllers.Factory{Conf: config}
 
-	goji.Get("/*", controllerFact.AdHtml())
+	goji.Get(constants.AssetsRouteReg(), controllerFact.AssetHTML())
+	goji.Get("/"+constants.AssetsRoute+"/*", controllerFact.AssetFiles())
 
 	goji.Serve()
 }
