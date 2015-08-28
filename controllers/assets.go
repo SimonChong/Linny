@@ -21,7 +21,7 @@ func (f *Factory) AssetHTML() func(web.C, http.ResponseWriter, *http.Request) {
 
 		fileReq := c.URLParams["file"]
 
-		fileAbs, err := common.ResolveSecure(f.Conf.ContentRoot+"/"+constants.AssetsRoute, fileReq)
+		fileAbs, err := common.ResolveSecure(f.Conf.ContentRoot+"/"+constants.AssetsDir, fileReq)
 		if err != nil {
 			fmt.Println("Secure Resolve Failed: ", err)
 			http.NotFound(w, r)
@@ -53,7 +53,7 @@ func (f *Factory) AssetHTML() func(web.C, http.ResponseWriter, *http.Request) {
 func (f *Factory) AssetFiles() http.Handler {
 
 	absBaseDir, _ := filepath.Abs(f.Conf.ContentRoot)
-	fileServeDir := absBaseDir + "/" + constants.AssetsRoute
+	fileServeDir := absBaseDir + "/" + constants.AssetsDir
 	fmt.Println(fileServeDir)
-	return http.StripPrefix("/"+constants.AssetsRoute+"/", http.FileServer(http.Dir(fileServeDir)))
+	return http.StripPrefix("/"+constants.AssetsDir+"/", http.FileServer(http.Dir(fileServeDir)))
 }

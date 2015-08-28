@@ -5,11 +5,11 @@ import (
 )
 
 const (
-	AssetsRoute   = "assets"
-	MetricsRoute  = "metrics"
-	InsightsRoute = "insights"
+	AssetsDir   = "assets"
+	MetricsDir  = "metrics"
+	InsightsDir = "insights"
 )
 
 func AssetsRouteReg() *regexp.Regexp {
-	return regexp.MustCompile(`^/` + AssetsRoute + `/(?P<file>[^\.]+(?:\.html)?)$`)
+	return regexp.MustCompile(`^/` + AssetsDir + `/(?P<file>[^\.]+(?:\.html)?)$`)
 }

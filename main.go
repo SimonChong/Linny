@@ -14,7 +14,7 @@ func main() {
 	controllerFact := controllers.Factory{Conf: config}
 
 	goji.Get(constants.AssetsRouteReg(), controllerFact.AssetHTML())
-	goji.Get("/"+constants.AssetsRoute+"/*", controllerFact.AssetFiles())
+	goji.Get("/"+constants.AssetsDir+"/*", controllerFact.AssetFiles())
 
 	goji.Serve()
 }
