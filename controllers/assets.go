@@ -21,7 +21,7 @@ func (f *Factory) AssetHTML() func(web.C, http.ResponseWriter, *http.Request) {
 
 		fileReq := c.URLParams["file"]
 
-		fileAbs, err := common.ResolveSecure(f.Conf.ContentRoot+"/"+constants.AssetsDir, fileReq)
+		fileAbs, err := common.ResolveSecure(f.ConfLinny.ContentRoot+"/"+constants.AssetsDir, fileReq)
 		if err != nil {
 			fmt.Println("Secure Resolve Failed: ", err)
 			http.NotFound(w, r)
@@ -34,13 +34,13 @@ func (f *Factory) AssetHTML() func(web.C, http.ResponseWriter, *http.Request) {
 			return
 		}
 
-		content, err := common.GetWrappedContent(fileAbs, f.Conf.ContentRoot)
+		content, err := common.GetWrappedContent(fileAbs, f.ConfLinny.ContentRoot)
 		if err != nil {
 			fmt.Println("Content Error: ", err)
 			http.NotFound(w, r)
 			return
 		}
-		content = common.InjectLinks(content, r)
+		content = common.InjectLinks(f.ConfAd.Id, content, r)
 
 		w.Header().Set(
 			"Content-Type",
@@ -52,7 +52,7 @@ func (f *Factory) AssetHTML() func(web.C, http.ResponseWriter, *http.Request) {
 
 func (f *Factory) AssetFiles() http.Handler {
 
-	absBaseDir, _ := filepath.Abs(f.Conf.ContentRoot)
+	absBaseDir, _ := filepath.Abs(f.ConfLinny.ContentRoot)
 	fileServeDir := absBaseDir + "/" + constants.AssetsDir
 	fmt.Println(fileServeDir)
 	return http.StripPrefix("/"+constants.AssetsDir+"/", http.FileServer(http.Dir(fileServeDir)))

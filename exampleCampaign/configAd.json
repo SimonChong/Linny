@@ -1,0 +1,6 @@
+{
+	"Id" : "ABC123",
+	"Name": "Example Campaign",
+	"HeaderFrag" : "header.frag",
+	"FooterFrag" : "footer.frag"
+}

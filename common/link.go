@@ -16,7 +16,7 @@ var regLK = regexp.MustCompile("{{lk\\s+[\"']?([^{}\"']+)[\"']?\\s*}}")
 var regLKM = regexp.MustCompile("{{lkm\\s+[\"']?([^{}\"']+)[\"']?\\s*}}")
 var timeNow time.Time
 
-func InjectLinks(content string, r *http.Request) string {
+func InjectLinks(adId string, content string, r *http.Request) string {
 
 	// fmt.Println(r.Host)
 	// fmt.Println(r.URL)
@@ -26,7 +26,7 @@ func InjectLinks(content string, r *http.Request) string {
 	curPath := path.Dir(r.URL.Path[1:])
 
 	content = replaceLK(content, host, curPath)
-	content = replaceLKM(content, host, curPath)
+	content = replaceLKM(content, host, curPath, adId)
 
 	return content
 }
@@ -50,12 +50,13 @@ func replaceLK(content string, host string, path string) string {
 	})
 }
 
-func replaceLKM(content string, host string, path string) string {
+func replaceLKM(content string, host string, path string, adId string) string {
 	return regLKM.ReplaceAllStringFunc(content, func(src string) string {
 		linkTo := resolveLink(host, path, regLKM.FindStringSubmatch(src)[1])
 		link := "//" + host + "/" + constants.MetricsDir + "/click?"
+		link += "&t=" + url.QueryEscape(fmt.Sprint(timeNow.Unix())) + "&"
+		link += "i=" + url.QueryEscape(adId) + "&"
 		link += "u=" + url.QueryEscape(linkTo)
-		link += "&t=" + fmt.Sprint(timeNow.Unix())
 		return link
 	})
 }

@@ -1,0 +1,8 @@
+{
+    "ContentRoot": "./exampleCampaign",
+    "Metrics": {
+        "Enabled": true,
+        "AuthRequired": false
+    }
+
+}

@@ -5,5 +5,6 @@ import (
 )
 
 type Factory struct {
-	Conf common.Config
+	ConfLinny common.ConfigLinny
+	ConfAd    common.ConfigAd
 }
