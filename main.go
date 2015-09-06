@@ -4,34 +4,36 @@ import (
 	"fmt"
 
 	"github.com/simonchong/linny/common"
-	"github.com/simonchong/linny/constants"
-	"github.com/simonchong/linny/controllers"
 
-	"github.com/zenazn/goji"
+	"github.com/simonchong/linny/packer"
+	"github.com/simonchong/linny/server"
 )
 
 func main() {
+
+	flags := common.NewCmdFlags()
 
 	configLinny, e1 := common.LoadConfigLinny()
 	if e1 != nil {
 		fmt.Println("ConfigLinny Error:", e1)
 		return
 	}
-	configAd, e2 := common.LoadConfigAd(&configLinny)
-	if e2 != nil {
-		fmt.Println("ConfigAd Error:", e2)
-		return
+
+	if flags.Pack {
+		packer.Pack(configLinny.ContentRoot)
+	}
+	if flags.Unpack != "" {
+		packer.Unpack(configLinny, flags.Unpack)
 	}
 
-	controllerFact := controllers.Factory{
-		ConfLinny: configLinny,
-		ConfAd:    configAd,
+	if flags.Serve {
+
+		configAd, e2 := common.LoadConfigAd(&configLinny)
+		if e2 != nil {
+			fmt.Println("ConfigAd Error:", e2)
+			return
+		}
+		server.Start(configLinny, configAd)
+
 	}
-
-	goji.Get(constants.AssetsRouteReg(), controllerFact.AssetHTML())
-	goji.Get("/"+constants.AssetsDir+"/*", controllerFact.AssetFiles())
-
-	goji.Get("/"+constants.MetricsDir+"/click", controllerFact.MetricsClick())
-
-	goji.Serve()
 }

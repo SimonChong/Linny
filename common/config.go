@@ -8,8 +8,14 @@ import (
 	"path/filepath"
 )
 
+type ConfigLinnyMetrics struct {
+	Enabled      bool
+	AuthRequired bool
+}
+
 type ConfigLinny struct {
 	ContentRoot string
+	Metrics     ConfigLinnyMetrics
 }
 
 func LoadConfigLinny() (ConfigLinny, error) {
@@ -36,8 +42,17 @@ func (c *ConfigLinny) Init() error {
 		fmt.Println("ContentRoot Error: ", err)
 		return err
 	}
-	fmt.Println("ContentRoot: ", c.ContentRoot)
+	// fmt.Println("ContentRoot: ", c.ContentRoot)
 	return nil
+}
+
+func (c *ConfigLinny) Save() {
+	data, err := json.MarshalIndent(c, "", "\t")
+	if err != nil {
+		fmt.Println("Martial Error", err)
+		return
+	}
+	ioutil.WriteFile("configLinny.json", data, 0777)
 }
 
 type ConfigAd struct {
