@@ -8,14 +8,14 @@ import (
 	"path/filepath"
 )
 
-type ConfigLinnyMetrics struct {
+type ConfigLinnyMeasure struct {
 	Enabled      bool
 	AuthRequired bool
 }
 
 type ConfigLinny struct {
 	ContentRoot string
-	Metrics     ConfigLinnyMetrics
+	Measure     ConfigLinnyMeasure
 }
 
 func LoadConfigLinny() (ConfigLinny, error) {

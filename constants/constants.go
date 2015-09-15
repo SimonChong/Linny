@@ -6,7 +6,7 @@ import (
 
 const (
 	AssetsDir   = "assets"
-	MetricsDir  = "metrics"
+	MeasureDir  = "measure"
 	InsightsDir = "insights"
 )
 

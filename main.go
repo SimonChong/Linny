@@ -5,6 +5,7 @@ import (
 
 	"github.com/simonchong/linny/common"
 
+	"github.com/simonchong/linny/insights"
 	"github.com/simonchong/linny/packer"
 	"github.com/simonchong/linny/server"
 )
@@ -29,11 +30,17 @@ func main() {
 	if flags.Serve {
 
 		configAd, e2 := common.LoadConfigAd(&configLinny)
+
+		data := new(insights.Data)
+		data.Init()
+		defer data.Close()
+
 		if e2 != nil {
 			fmt.Println("ConfigAd Error:", e2)
 			return
 		}
-		server.Start(configLinny, configAd)
+		server.Start(&configLinny, &configAd, data)
 
 	}
+
 }

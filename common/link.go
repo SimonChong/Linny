@@ -12,11 +12,10 @@ import (
 	"github.com/simonchong/linny/constants"
 )
 
-var regLK = regexp.MustCompile("{{lk\\s+[\"']?([^{}\"']+)[\"']?\\s*}}")
-var regLKM = regexp.MustCompile("{{lkm\\s+[\"']?([^{}\"']+)[\"']?\\s*}}")
+var regILK = regexp.MustCompile("{{ilk\\s+[\"']?([^{}\"']+)[\"']?\\s*}}")
 var timeNow time.Time
 
-func InjectLinks(adId string, content string, r *http.Request) string {
+func InjectLinks(adID string, content string, r *http.Request) string {
 
 	// fmt.Println(r.Host)
 	// fmt.Println(r.URL)
@@ -25,8 +24,8 @@ func InjectLinks(adId string, content string, r *http.Request) string {
 	host := r.Host
 	curPath := path.Dir(r.URL.Path[1:])
 
-	content = replaceLK(content, host, curPath)
-	content = replaceLKM(content, host, curPath, adId)
+	content = replaceILK(content, host, curPath)
+	content = replaceMLK(content, host, curPath, adID)
 
 	return content
 }
@@ -44,19 +43,30 @@ func resolveLink(host string, currentDir string, link string) string {
 	return link
 }
 
-func replaceLK(content string, host string, path string) string {
-	return regLK.ReplaceAllStringFunc(content, func(src string) string {
-		return resolveLink(host, path, regLK.FindStringSubmatch(src)[1])
+// Internal Links
+func replaceILK(content string, host string, path string) string {
+	return regILK.ReplaceAllStringFunc(content, func(src string) string {
+		return resolveLink(host, path, regILK.FindStringSubmatch(src)[1])
 	})
 }
 
-func replaceLKM(content string, host string, path string, adId string) string {
-	return regLKM.ReplaceAllStringFunc(content, func(src string) string {
-		linkTo := resolveLink(host, path, regLKM.FindStringSubmatch(src)[1])
-		link := "//" + host + "/" + constants.MetricsDir + "/click?"
-		link += "&t=" + url.QueryEscape(fmt.Sprint(timeNow.Unix())) + "&"
-		link += "i=" + url.QueryEscape(adId) + "&"
-		link += "u=" + url.QueryEscape(linkTo)
+var regMLK = regexp.MustCompile("{{mlk\\s+[\"']?([^{}\"']+)[\"']?[^}]*}}")
+var tagExtract = regexp.MustCompile("tag\\s*=\\s*[\"']([\\w ]+)[\"']")
+
+func replaceMLK(content string, host string, path string, adID string) string {
+	return regMLK.ReplaceAllStringFunc(content, func(src string) string {
+		linkTo := resolveLink(host, path, regMLK.FindStringSubmatch(src)[1])
+		tag := tagExtract.FindStringSubmatch(src)
+
+		link := "//" + host + "/" + constants.MeasureDir + "/click?"
+		link += "g=" + url.QueryEscape(fmt.Sprint(timeNow.Unix())) + "&"
+		link += "a=" + url.QueryEscape(adID) + "&"
+		link += "l=" + url.QueryEscape(linkTo)
+
+		if len(tag) > 1 {
+			link += "&t=" + url.QueryEscape(tag[1])
+		}
+
 		return link
 	})
 }
