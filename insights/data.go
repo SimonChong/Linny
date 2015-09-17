@@ -8,9 +8,10 @@ import (
 )
 
 type Data struct {
-	connection    *sql.DB
-	Impressions   *Impressions
-	ClickThroughs *ClickThroughs
+	connection      *sql.DB
+	AdDownloads     *AdDownloads
+	AdViews         *AdViews
+	AdClickThroughs *AdClickThroughs
 }
 
 func (d *Data) Init() {
@@ -21,11 +22,14 @@ func (d *Data) Init() {
 	checkErr(err)
 	d.connection = db
 
-	d.Impressions = new(Impressions)
-	d.Impressions.Init(d.connection)
+	d.AdDownloads = new(AdDownloads)
+	d.AdDownloads.Init(d.connection)
 
-	d.ClickThroughs = new(ClickThroughs)
-	d.ClickThroughs.Init(d.connection)
+	d.AdViews = new(AdViews)
+	d.AdViews.Init(d.connection)
+
+	d.AdClickThroughs = new(AdClickThroughs)
+	d.AdClickThroughs.Init(d.connection)
 
 }
 

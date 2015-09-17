@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"net"
 	"net/http"
 	"path/filepath"
 
@@ -34,6 +35,16 @@ func (f *Factory) AssetHTML() func(web.C, http.ResponseWriter, *http.Request) {
 			return
 		}
 
+		//Metrics collection
+		originIP, _, err := net.SplitHostPort(r.RemoteAddr)
+		if err != nil {
+			fmt.Println("IP error")
+			originIP = ""
+		}
+		referer := r.Header.Get("referer")
+		f.Data.AdDownloads.Insert(f.ConfAd.Id, r.URL.Path[1:], referer, originIP, "SESSIONID TODO")
+
+		//Content Processing and rendering
 		content, err := common.GetWrappedContent(fileAbs, f.ConfLinny.ContentRoot)
 		if err != nil {
 			fmt.Println("Content Error: ", err)

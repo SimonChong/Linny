@@ -41,7 +41,8 @@ func (f *Factory) MeasureClick() func(web.C, http.ResponseWriter, *http.Request)
 			fmt.Println("Link Tag: ", tag)
 			fmt.Println("Link Referer: ", referer)
 
-			f.Data.ClickThroughs.Insert("uid", referer, destLink, originIP, timeGenTime, tag)
+			f.Data.AdClickThroughs.Insert(adID, referer, destLink, originIP,
+				timeGenTime, tag, "SESSIONID TODO")
 
 			//TODO redirect 301 to u
 			//TODO add conversion cookie
