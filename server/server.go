@@ -15,6 +15,8 @@ func Start(configLinny *common.ConfigLinny, configAd *common.ConfigAd, data *ins
 		ConfAd:    configAd,
 		Data:      data,
 	}
+
+	goji.Use(SessionCookieGen)
 	goji.Get(constants.AssetsRouteReg(), controllerFact.AssetHTML())
 	goji.Get("/"+constants.AssetsDir+"/*", controllerFact.AssetFiles())
 
