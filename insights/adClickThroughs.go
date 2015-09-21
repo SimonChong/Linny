@@ -13,7 +13,7 @@ type AdClickThroughs struct {
 func (c *AdClickThroughs) Init(db *sql.DB) {
 	c.db = db
 
-	sql := `CREATE TABLE IF NOT EXISTS "AdClickThroughs" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL UNIQUE,"created" DATETIME DEFAULT CURRENT_TIMESTAMP,"adID" VARCHAR,"refererURL" VARCHAR,"destinationURL" VARCHAR,"originIP" VARCHAR,"linkGeneratedOn" DATETIME,"linkTag" VARCHAR,"sessionID" VARCHAR);`
+	sql := `CREATE TABLE IF NOT EXISTS "AdClickThroughs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, "created" DATETIME DEFAULT CURRENT_TIMESTAMP, "adID" VARCHAR, "refererURL" VARCHAR, "destinationURL" VARCHAR, "originIP" VARCHAR, "linkGeneratedOn" DATETIME, "linkTag" VARCHAR, "sessionID" VARCHAR);`
 	c.db.Exec(sql)
 
 	ins, err := db.Prepare(`INSERT INTO AdClickThroughs( adID, refererURL, destinationURL, originIP, linkGeneratedOn, linkTag, sessionID) values(?,?,?,?,?,?,?)`)

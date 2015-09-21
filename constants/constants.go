@@ -5,9 +5,9 @@ import (
 )
 
 const (
-	AssetsDir   = "assets"
-	MeasureDir  = "measure"
-	InsightsDir = "insights"
+	AssetsDir  = "assets"
+	MeasureDir = "measure"
+	ViewsDir   = "views"
 )
 
 func AssetsRouteReg() *regexp.Regexp {

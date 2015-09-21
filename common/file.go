@@ -2,7 +2,6 @@ package common
 
 import (
 	"errors"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -23,26 +22,6 @@ func ResolveSecure(baseDir string, path string) (string, error) {
 		return absFile, nil
 	}
 	return "", errors.New("Invalid Path :" + absFile + " | " + absBaseDir)
-}
-
-func GetWrappedContent(path string, root string) (string, error) {
-
-	content, err0 := ioutil.ReadFile(path)
-	if err0 != nil {
-		return "", err0
-	}
-	header, err1 := ioutil.ReadFile(root + "/header.frag")
-	if err1 != nil {
-		return "", err1
-	}
-	footer, err2 := ioutil.ReadFile(root + "/footer.frag")
-	if err2 != nil {
-		return "", err2
-	}
-
-	rtn := string(header) + string(content) + string(footer)
-
-	return rtn, nil
 }
 
 func FileExistsHTML(path string) (bool, string) {

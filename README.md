@@ -6,8 +6,9 @@ Linny is a light weight and simple micro ad server that is designed to serve one
 ## Features
 
 * Serves one ad or ad campaign
-* Measures ad views and click-through conversions
-* Simple click-through link taging and generation
+* Measures ad views and click-throughs
+* Measures any number of conversion landing pages
+* Simple click-through link tagging and generation
 
 
 ## Principles

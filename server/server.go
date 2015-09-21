@@ -20,6 +20,8 @@ func Start(configLinny *common.ConfigLinny, configAd *common.ConfigAd, data *ins
 
 	goji.Get("/"+constants.MeasureDir+"/click", controllerFact.MeasureClick())
 
+	goji.Get("/"+constants.ViewsDir+"/v.gif", controllerFact.ViewCounter())
+
 	goji.Serve()
 
 }

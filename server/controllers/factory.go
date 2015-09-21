@@ -6,7 +6,7 @@ import (
 )
 
 type Factory struct {
+	Data      *insights.Data
 	ConfLinny *common.ConfigLinny
 	ConfAd    *common.ConfigAd
-	Data      *insights.Data
 }

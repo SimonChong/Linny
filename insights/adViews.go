@@ -2,6 +2,7 @@ package insights
 
 import (
 	"database/sql"
+	"time"
 )
 
 type AdViews struct {
@@ -9,21 +10,20 @@ type AdViews struct {
 	insert *sql.Stmt
 }
 
-func (i *AdViews) Init(db *sql.DB) {
-	i.db = db
+func (c *AdViews) Init(db *sql.DB) {
+	c.db = db
 
-	sql := `CREATE TABLE IF NOT EXISTS "AdViews" ( "id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "created" DATETIME DEFAULT CURRENT_TIME, "userId" VARCHAR, "originURL" VARCHAR, "ip" VARCHAR
-);`
-	i.db.Exec(sql)
+	sql := `CREATE TABLE IF NOT EXISTS "AdViews" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, "created" DATETIME DEFAULT CURRENT_TIMESTAMP, "adID" VARCHAR, "refererURL" VARCHAR, "originIP" VARCHAR, "contentGeneratedOn" DATETIME, "sessionID" VARCHAR);`
+	c.db.Exec(sql)
 
-	insertImp, err := db.Prepare("INSERT INTO AdViews(userId, originURL, ip) values(?,?,?)")
+	ins, err := db.Prepare(`INSERT INTO AdViews(adID, refererURL, originIP, contentGeneratedOn, sessionID) values(?,?,?,?,?)`)
 	checkErr(err)
-	i.insert = insertImp
+	c.insert = ins
 
 }
 
-func (i *AdViews) Insert(userId string, originURL string, ip string) (sql.Result, error) {
-	res, err := i.insert.Exec(userId, originURL, ip)
+func (i *AdViews) Insert(adID string, refererURL string, originIP string, contentGeneratedOn time.Time, sessionID string) (sql.Result, error) {
+	res, err := i.insert.Exec(adID, refererURL, originIP, contentGeneratedOn, sessionID)
 	checkErr(err)
 
 	return res, err
