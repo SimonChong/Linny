@@ -7,22 +7,26 @@ import (
 	"github.com/simonchong/linny/constants"
 	"github.com/simonchong/linny/insights"
 	"github.com/simonchong/linny/server/controllers"
+	"github.com/simonchong/linny/server/middleware"
+	"github.com/simonchong/linny/server/wrappers"
 )
 
 func Start(configLinny *common.ConfigLinny, configAd *common.ConfigAd, data *insights.Data) {
-	controllerFact := controllers.Factory{
+
+	appContext := wrappers.AppContext{
+		Data:      data,
 		ConfLinny: configLinny,
 		ConfAd:    configAd,
-		Data:      data,
 	}
 
-	goji.Use(SessionCookieGen)
-	goji.Get(constants.AssetsRouteReg(), controllerFact.AssetHTML())
-	goji.Get("/"+constants.AssetsDir+"/*", controllerFact.AssetFiles())
+	goji.Use(middleware.SessionCookieGen)
 
-	goji.Get("/"+constants.MeasureDir+"/click", controllerFact.MeasureClick())
+	goji.Get(constants.AssetsRouteReg(), wrappers.AppSessionHandler{&appContext, controllers.AssetHTML})
+	goji.Get("/"+constants.AssetsDir+"/*", wrappers.AppSessionHandler{&appContext, controllers.AssetFiles})
 
-	goji.Get("/"+constants.ViewsDir+"/v.gif", controllerFact.ViewCounter())
+	goji.Get("/"+constants.MeasureDir+"/click", wrappers.AppSessionHandler{&appContext, controllers.MeasureClick})
+
+	goji.Get("/"+constants.ViewsDir+"/v.gif", wrappers.AppSessionHandler{&appContext, controllers.ViewCounter})
 
 	goji.Serve()
 
