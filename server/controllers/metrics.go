@@ -13,7 +13,7 @@ import (
 	"github.com/zenazn/goji/web"
 )
 
-var isNum = regexp.MustCompile(`/\d/`)
+var isNum = regexp.MustCompile(`\d+`)
 
 func MeasureClick(ac *wrappers.AppContext, sID string, c web.C, w http.ResponseWriter, r *http.Request) (int, error) {
 
@@ -23,6 +23,7 @@ func MeasureClick(ac *wrappers.AppContext, sID string, c web.C, w http.ResponseW
 		return http.StatusInternalServerError, errIP
 	}
 	timeGen := r.FormValue("g")
+	fmt.Println(timeGen)
 	if !isNum.MatchString(timeGen) {
 		return 404, errors.New("MeasureClick: timeGen is not a number")
 	}

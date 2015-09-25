@@ -22,8 +22,9 @@ func ViewCounter(ac *wrappers.AppContext, sID string, c web.C, w http.ResponseWr
 		return http.StatusInternalServerError, errIP
 	}
 	timeGen := r.FormValue("g")
+	fmt.Println(timeGen)
 	if !isNum.MatchString(timeGen) {
-		return http.StatusServiceUnavailable, errors.New("MeasureClick: timeGen is not a number")
+		return http.StatusServiceUnavailable, errors.New("ViewCounter: timeGen is not a number")
 	}
 
 	timeGenUnix, errT := strconv.ParseInt(timeGen, 10, 64)

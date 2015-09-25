@@ -7,7 +7,6 @@ import (
 	"github.com/simonchong/linny/constants"
 	"github.com/simonchong/linny/insights"
 	"github.com/simonchong/linny/server/controllers"
-	"github.com/simonchong/linny/server/middleware"
 	"github.com/simonchong/linny/server/wrappers"
 )
 
@@ -18,8 +17,6 @@ func Start(configLinny *common.ConfigLinny, configAd *common.ConfigAd, data *ins
 		ConfLinny: configLinny,
 		ConfAd:    configAd,
 	}
-
-	goji.Use(middleware.SessionCookieGen)
 
 	goji.Get(constants.AssetsRouteReg(), wrappers.AppSessionHandler{&appContext, controllers.AssetHTML})
 	goji.Get("/"+constants.AssetsDir+"/*", wrappers.AppSessionHandler{&appContext, controllers.AssetFiles})
