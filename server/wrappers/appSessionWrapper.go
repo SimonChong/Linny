@@ -22,7 +22,7 @@ func (handle AppSessionHandler) ServeHTTPC(c web.C, w http.ResponseWriter, r *ht
 	//Generate sessionID
 	sessionID := ""
 	ckExisting, err := r.Cookie(SessionCookieName)
-	if err != nil {
+	if err == nil {
 		sessionID = ckExisting.Value
 	} else {
 		sessionID = strings.Replace(uuid.NewV1().String(), "-", "", -1)
