@@ -12,6 +12,7 @@ type Data struct {
 	AdDownloads     *AdDownloads
 	AdViews         *AdViews
 	AdClickThroughs *AdClickThroughs
+	AdConversions   *AdConversions
 }
 
 func (d *Data) Init() {
@@ -30,6 +31,9 @@ func (d *Data) Init() {
 
 	d.AdClickThroughs = new(AdClickThroughs)
 	d.AdClickThroughs.Init(d.connection)
+
+	d.AdConversions = new(AdConversions)
+	d.AdConversions.Init(d.connection)
 
 }
 

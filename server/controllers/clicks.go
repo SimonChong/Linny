@@ -1,48 +1,37 @@
 package controllers
 
 import (
-	"errors"
 	"fmt"
 	"net"
 	"net/http"
-	"regexp"
-	"strconv"
-	"time"
 
+	"github.com/simonchong/linny/common"
+	"github.com/simonchong/linny/server/controllers/conversions"
 	"github.com/simonchong/linny/server/wrappers"
 	"github.com/zenazn/goji/web"
 )
 
-var isNum = regexp.MustCompile(`\d+`)
-
-func MeasureClick(ac *wrappers.AppContext, sID string, c web.C, w http.ResponseWriter, r *http.Request) (int, error) {
+func ClickTracking(ac *wrappers.AppContext, sID string, c web.C, w http.ResponseWriter, r *http.Request) (int, error) {
 
 	adID := r.FormValue("a")
 	originIP, _, errIP := net.SplitHostPort(r.RemoteAddr)
 	if errIP != nil {
 		return http.StatusInternalServerError, errIP
 	}
-	timeGen := r.FormValue("g")
-	fmt.Println(timeGen)
-	if !isNum.MatchString(timeGen) {
-		return 404, errors.New("MeasureClick: timeGen is not a number")
-	}
-	timeGenUnix, errT := strconv.ParseInt(timeGen, 10, 64)
+
+	timeGen, errT := common.FormTime("g", r)
 	if errT != nil {
 		return http.StatusInternalServerError, errT
 	}
+
 	destLink := r.FormValue("l")
 	tag := r.FormValue("t")
 	referer := r.Header.Get("referer")
 
-	now := time.Now().Unix()
-	if timeGenUnix > now {
-		timeGenUnix = now
-	}
-	timeGenTime := time.Unix(timeGenUnix, 0)
+	conversions.AddCookie(w, r, adID)
 
 	fmt.Println("Link Path: ", r.URL.Path[1:])
-	fmt.Println("Link Gen Time: ", timeGenTime)
+	fmt.Println("Link Gen Time: ", timeGen)
 	fmt.Println("Link ADID: ", adID)
 	fmt.Println("Link Click Through: ", destLink)
 	fmt.Println("Link Tag: ", tag)
@@ -50,10 +39,9 @@ func MeasureClick(ac *wrappers.AppContext, sID string, c web.C, w http.ResponseW
 	fmt.Println("Link SessionID", sID)
 
 	ac.Data.AdClickThroughs.Insert(adID, referer, destLink, originIP,
-		timeGenTime, tag, sID)
+		timeGen, tag, sID)
 
 	//TODO redirect 301 to u
-	//TODO add conversion cookie
 	// http.Redirect(w, r, destLink, http.StatusFound)
 
 	return 301, nil

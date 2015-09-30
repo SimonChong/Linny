@@ -58,7 +58,7 @@ func replaceMLK(content string, host string, path string, adID string) string {
 		linkTo := resolveLink(host, path, regMLK.FindStringSubmatch(src)[1])
 		tag := tagExtract.FindStringSubmatch(src)
 
-		link := "//" + host + "/" + constants.MeasureDir + "/click?"
+		link := "//" + host + "/" + constants.MeasureDir + "/k?"
 		link += "g=" + url.QueryEscape(fmt.Sprint(timeNow.Unix())) + "&"
 		link += "a=" + url.QueryEscape(adID) + "&"
 		link += "l=" + url.QueryEscape(linkTo)

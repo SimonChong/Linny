@@ -44,7 +44,7 @@ func AssetHTML(ac *wrappers.AppContext, sID string, c web.C, w http.ResponseWrit
 		originIP = ""
 	}
 	referer := r.Header.Get("referer")
-	ac.Data.AdDownloads.Insert(ac.ConfAd.Id, r.URL.Path[1:], referer, originIP, "SESSIONID TODO")
+	ac.Data.AdDownloads.Insert(ac.ConfAd.Id, r.URL.Path[1:], referer, originIP, sID)
 
 	//Content Processing and rendering
 	content, err := getWrappedContent(fileAbs, ac.ConfLinny.ContentRoot, ac.ConfAd.Id, r)
@@ -81,7 +81,7 @@ func getTrackingCode(adID string, host string) string {
 	}
 	unix := strconv.FormatInt(time.Now().Unix(), 10)
 
-	return "<script defer='defer'>(function(a, h, v, g) {" + string(code) + "})('" + adID + "' , '" + host + "','" + constants.ViewsDir + "'," + unix + ");</script>"
+	return "<script defer='defer'>(function(a, h, v, g) {" + string(code) + "})('" + adID + "' , '" + host + "','" + constants.MeasureDir + "'," + unix + ");</script>"
 }
 
 func getWrappedContent(path string, root string, adID string, r *http.Request) (string, error) {

@@ -7,7 +7,7 @@ Linny is a light weight and simple micro ad server that is designed to serve one
 
 * Serves one ad or ad campaign
 * Measures ad views and click-throughs
-* Measures any number of conversion landing pages
+* Measures any number of conversions on any number of pages
 * Simple click-through link tagging and generation
 
 
@@ -17,7 +17,7 @@ The following are guiding principles used to design and build this system.
 
 1. It should be light weight (less than 10MB).
 2. It should be fast (a response time of less than 200ms).
-3. It must be able to serve 1,000 ads per second on a $5 [Linode](http://www.linode.com) or [Droplet](http://www.digitalocean.com).
+3. It must be able to serve 1,000 ads per second on a server with 1GB of RAM and 1 Core.
 4. It is designed to only serve one web display ad or ad campaign (a group of ads with one click-through url).
 5. It should be quick to configure and deploy (~10 minuites)
 
@@ -51,10 +51,17 @@ When you have the prequsites in place you can follow the steps below to get the 
 
 
 #### Internal Resources References
-{{ilk "assets/testURL.com" }}
+{{ilk "someOtherAsset.html" }}
 
 #### Click-through Links with Tracking
 {{mlk "http://www.testURL.com" tag="testTAG"}}
+
+#### Conversion Taging
+```javascript
+var s = document.createElement("script");
+s.src = "//localhost:8000/m/c.js?t=YOURTAG";
+document.body.appendChild(s);
+```
 
 ## Deploying to Production
 

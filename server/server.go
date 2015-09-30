@@ -21,9 +21,13 @@ func Start(configLinny *common.ConfigLinny, configAd *common.ConfigAd, data *ins
 	goji.Get(constants.AssetsRouteReg(), wrappers.AppSessionHandler{&appContext, controllers.AssetHTML})
 	goji.Get("/"+constants.AssetsDir+"/*", wrappers.AppSessionHandler{&appContext, controllers.AssetFiles})
 
-	goji.Get("/"+constants.MeasureDir+"/click", wrappers.AppSessionHandler{&appContext, controllers.MeasureClick})
+	goji.Get("/"+constants.MeasureDir+"/k", wrappers.AppSessionHandler{&appContext, controllers.ClickTracking})
 
-	goji.Get("/"+constants.ViewsDir+"/v.gif", wrappers.AppSessionHandler{&appContext, controllers.ViewCounter})
+	goji.Get("/"+constants.MeasureDir+"/v.gif", wrappers.AppSessionHandler{&appContext, controllers.ViewCounter})
+
+	goji.Get("/"+constants.MeasureDir+"/c.js", wrappers.AppContextHandler{&appContext, controllers.ConversionsJS})
+
+	goji.Get("/"+constants.MeasureDir+"/c.gif", wrappers.AppContextHandler{&appContext, controllers.Conversions})
 
 	goji.Serve()
 
