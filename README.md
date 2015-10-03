@@ -9,7 +9,7 @@ Linny is a light weight and simple micro ad server that is designed to serve one
 * Measures ad views and click-throughs
 * Measures any number of conversions on any number of pages
 * Simple click-through link tagging and generation
-* Simple link resolution
+* Simple link resolution templating
 
 
 ## Principles
@@ -79,22 +79,43 @@ Ad creatives usually rely on loading a number of assets and resources. To ensure
 {{ilk "someAsset.png" }}
 ```
 
-Example usage inside your HTML:
+Example usage inside your HTML ad:
 
 ```html
-<a href="{{ilk 'someAsset.js'}}"> LINK</a>
+<script src="{{ilk 'someAsset.js'}}"></script>
 ```
 
 ### Click-through Links with Tracking
-To track when users click on links to pages
-{{mlk "http://www.testURL.com" tag="testTAG"}}
+To track when users click on an ad you can use the following code to track the clicks. Appropriate conversion attribution can be tracked as per the conversion tagging section.
 
-### Conversion Taging
 ```js
+{{mlk "http://www.testURL.com" tag="testTAG"}}
+```
+
+Example usage inside you HTML ad:
+```html
+<a href='{{mlk "http://www.testURL.com" tag="testTAG"}}'>Link</a>
+```
+
+### Conversion Tagging
+This helps you track the effectiveness of your ad. After a user clicks on the ad, you can track if user bought something or did something by adding or loading the following script on that action.
+
+
+```html
+<script>
 var s = document.createElement("script");
 s.src = "//localhost:8000/m/c.js?t=YOURTAG";
 document.body.appendChild(s);
+</script>
 ```
+
+- Replace "YOURTAG" with a label describing the conversion
+- Replace "localhost:8000" with the domain of your ad server
+- Using different tags will allow you to track multiple conversions
+
+#### Example:
+
+If you host an ad to sell something, putting this script on the thank you page after someone buys something will allow you to see how many people bought something after clicking on the ad i.e the conversion rate.
 
 
 ## Display Ad Development
