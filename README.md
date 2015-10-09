@@ -32,11 +32,48 @@ The following are guiding principles used to design and build this system.
 When you have the prequsites in place you can follow the steps below to get the ad server running.
 
 1. Download the latest copy of Linny
-	- wget ....(TODO URL and command to download latest)
+	- go get ....(TODO URL and command to download latest)
 2. Run Linny
-	- go run ....(TODO go command to run Linny)
+	- linny ....(TODO go command to run Linny)
 
-### Folder Structure
+### Quick Start
+
+1. Create a new directory ```mkdir adServer```
+2. Run the linny initialization command ```linny -init``` (this will create all the necessary files)
+4. Run the linny server ```linny -serve```
+3. Modify and add files until your creative is ready
+
+
+### Ad Folder Structure
+
+- Server Config
+	- configLinny.json (configures the server and where the ad directory)
+
+
+- Ad Directory
+	- configAd.json (the ad configuration)
+	- assets (directory for all creative code)
+		- index.html (default html file)
+	- header.frag (the header prepended to all HTML files)
+	- footer.frag (the footer appended to all HTML files)
+
+
+## Linny Commands
+
+```
+linny -serve
+```
+
+#### Packaging your Ad
+Your can package your ad so that you can send it via email or sftp
+```
+linny -pack
+```
+To unpack your ad just use the following command
+```
+linny -unpack
+```
+
 
 ### Configuration
 There are two configurations required to serve ads, a server configuration and an ad configuration.
@@ -69,6 +106,7 @@ This configuration file is specific to the ad or campaign itself.
 - **HeaderFrag** location of the header html fragment that wraps all HTML files
 - **FooterFrag** location of the footer html fragment that wraps all HTML files
 
+## Ad Development
 
 ### Internal Resources References
 Ad creatives usually rely on loading a number of assets and resources. To ensure they resolve to the correct address, absolute urls are generated using the following syntax.
@@ -118,13 +156,17 @@ document.body.appendChild(s);
 If you host an ad to sell something, putting this script on the thank you page after someone buys something will allow you to see how many people bought something after clicking on the ad i.e the conversion rate.
 
 
-## Display Ad Development
+## Display Ad Development Tutorials
 
-### Building a Single Web Display Ad
+### Building a Single Medium Rectangle (300x250) Display Ad
 
-#### Medium Rectangle Ad 300x250
+1. Install Linny
+2. Create a folder called "MedRecAdServer"
+3. Run "linny -init" this will initialize and create a blank ad
+4. Edit the "index.html" file in MedRecAdServer/newAdDir/assests with your favorite text editor.
 
-### Building a Web Display Ad Campaign
+
+### Building a Display Ad Campaign
 
 #### Medium Rectangle Ad 300x250
 #### Half Page Ad 300x600
