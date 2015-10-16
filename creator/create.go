@@ -42,4 +42,4 @@ var headerFrag = `<html>`
 
 var footerFrag = `</html>`
 
-var index = `<body>Hello World</body>`
+var index = `<div>Hello World</div>`

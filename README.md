@@ -29,19 +29,20 @@ The following are guiding principles used to design and build this system.
 
 ## Getting Started
 
-When you have the prequsites in place you can follow the steps below to get the ad server running.
+When you have the perquisites in place you can follow the steps below to get the ad server running.
 
 1. Download the latest copy of Linny
-	- go get ....(TODO URL and command to download latest)
+	- go get github.com/SimonChong/Linny
 2. Run Linny
-	- linny ....(TODO go command to run Linny)
+	- linny -serve
 
 ### Quick Start
 
 1. Create a new directory ```mkdir adServer```
 2. Run the linny initialization command ```linny -init``` (this will create all the necessary files)
 4. Run the linny server ```linny -serve```
-3. Modify and add files until your creative is ready
+5. Open your browser and go to ```localhost:8000```
+6. Modify and add files until your creative is ready
 
 
 ### Ad Folder Structure
@@ -60,8 +61,18 @@ When you have the prequsites in place you can follow the steps below to get the 
 
 ## Linny Commands
 
+#### Ad server
+Start the linny ad server:
 ```
 linny -serve
+```
+```
+linny -serve - bind=":8000"
+```
+### Development
+Create a new server directory with example ad directory
+```
+linny -init
 ```
 
 #### Packaging your Ad
@@ -75,7 +86,7 @@ linny -unpack
 ```
 
 
-### Configuration
+## Server Configuration
 There are two configurations required to serve ads, a server configuration and an ad configuration.
 
 #### Server Configuration
@@ -163,7 +174,39 @@ If you host an ad to sell something, putting this script on the thank you page a
 1. Install Linny
 2. Create a folder called "MedRecAdServer"
 3. Run "linny -init" this will initialize and create a blank ad
-4. Edit the "index.html" file in MedRecAdServer/newAdDir/assests with your favorite text editor.
+4. Edit the "index.html" file in MedRecAdServer/newAdDir/assets with your favorite text editor.
+5. Add code until it looks like the following
+
+```html
+<style type="text/css">
+body {
+    font-family: Arial, sans-serif;
+}
+
+#mr {
+    display: block;
+    width: 300px;
+    height: 250px;
+    color: white;
+    background-color: black;
+    margin: 0 auto;
+}
+
+.title {
+    text-align: center;
+    font-size: 40px;
+    padding: 15px;
+}
+</style>
+<div id="mr">
+    <div class="title">
+        Medium Rectangle 300x250
+    </div>
+</div>
+```
+
+6. Run ```linny -serve```
+7. Open our browser and go to ```localhost:8000```
 
 
 ### Building a Display Ad Campaign
@@ -181,7 +224,7 @@ If you host an ad to sell something, putting this script on the thank you page a
 
 ## About
 
-Linny was built to make it easy and accessable for developers and businesses alike to build, host and measure the performance of their web display ads.
+Linny was built to make it easy and accessible for developers and businesses alike to build, host and measure the performance of their web display ads.
 
 ## Copyright and Licence
 
