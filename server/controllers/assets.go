@@ -11,7 +11,9 @@ import (
 	"time"
 
 	"github.com/simonchong/linny/common"
-	"github.com/simonchong/linny/constants"
+	"github.com/simonchong/linny/server/controllers/assets"
+	"github.com/simonchong/linny/server/controllers/resources"
+	"github.com/simonchong/linny/server/paths"
 	"github.com/simonchong/linny/server/wrappers"
 
 	"github.com/zenazn/goji/web"
@@ -26,7 +28,7 @@ func AssetHTML(ac *wrappers.AppContext, sID string, c web.C, w http.ResponseWrit
 
 	fileReq := c.URLParams["file"]
 
-	fileAbs, err := common.ResolveSecure(ac.ConfLinny.ContentRoot+"/"+constants.AssetsDir, fileReq)
+	fileAbs, err := common.ResolveSecure(ac.ConfLinny.ContentRoot+"/"+paths.AssetsDir, fileReq)
 	if err != nil {
 		fmt.Println("Secure Resolve Failed: ", err)
 		return 404, errors.New("Secure Resolve Failed: " + err.Error())
@@ -53,7 +55,7 @@ func AssetHTML(ac *wrappers.AppContext, sID string, c web.C, w http.ResponseWrit
 		http.NotFound(w, r)
 		return 502, errors.New("Content Error: " + err.Error())
 	}
-	content = common.InjectLinks(ac.ConfAd.Id, content, r)
+	content = assets.InjectLinks(ac.ConfAd.Id, content, r)
 
 	w.Header().Set(
 		"Content-Type",
@@ -66,22 +68,20 @@ func AssetHTML(ac *wrappers.AppContext, sID string, c web.C, w http.ResponseWrit
 func AssetFiles(ac *wrappers.AppContext, sID string, c web.C, w http.ResponseWriter, r *http.Request) (int, error) {
 
 	absBaseDir, _ := filepath.Abs(ac.ConfLinny.ContentRoot)
-	fileServeDir := absBaseDir + "/" + constants.AssetsDir
+	fileServeDir := absBaseDir + "/" + paths.AssetsDir
 	fmt.Println(fileServeDir)
-	handle := http.StripPrefix("/"+constants.AssetsDir+"/", http.FileServer(http.Dir(fileServeDir)))
+	handle := http.FileServer(http.Dir(fileServeDir))
 
 	handle.ServeHTTP(w, r)
 	return 200, nil
 }
 
+//go:generate wgf -i=../../resources/tracking.js -o=./resources/trackingJS.go -p=resources -c=TrackingJS
+
 func getTrackingCode(adID string, host string) string {
-	code, err := ioutil.ReadFile("./resources/tracking.js")
-	if err != nil {
-		panic(err)
-	}
 	unix := strconv.FormatInt(time.Now().Unix(), 10)
 
-	return "<script defer='defer'>(function(a, h, v, g) {" + string(code) + "})('" + adID + "' , '" + host + "','" + constants.MeasureDir + "'," + unix + ");</script>"
+	return "<script defer='defer'>(function(a, h, v, g) {" + resources.TrackingJS + "})('" + adID + "' , '" + host + "','" + paths.MeasureDir + "'," + unix + ");</script>"
 }
 
 func getWrappedContent(path string, root string, adID string, r *http.Request) (string, error) {

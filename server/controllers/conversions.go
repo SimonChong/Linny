@@ -4,29 +4,28 @@ import (
 	"encoding/base64"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net"
 	"net/http"
 	"strconv"
+
 	"time"
 
 	"github.com/simonchong/linny/common"
-	"github.com/simonchong/linny/constants"
 	"github.com/simonchong/linny/server/controllers/conversions"
+	"github.com/simonchong/linny/server/controllers/resources"
+	"github.com/simonchong/linny/server/paths"
 	"github.com/simonchong/linny/server/wrappers"
 	"github.com/zenazn/goji/web"
 )
 
+//go:generate wgf -i=../../resources/conversion.js -o=./resources/conversionJS.go -p=resources -c=ConversionJS
+
 func ConversionsJS(ac *wrappers.AppContext, c web.C, w http.ResponseWriter, r *http.Request) (int, error) {
 
-	code, err := ioutil.ReadFile("./resources/conversion.js")
-	if err != nil {
-		panic(err)
-	}
 	unix := strconv.FormatInt(time.Now().Unix(), 10)
 	tag := r.FormValue("t")
 
-	body := "(function(h, v, t, g) {" + string(code) + "})('" + r.Host + "','" + constants.MeasureDir + "','" + tag + "'," + unix + ");"
+	body := "(function(h, v, t, g) {" + string(resources.ConversionJS) + "})('" + r.Host + "','" + paths.MeasureDir + "','" + tag + "'," + unix + ");"
 
 	w.Header().Set(
 		"Content-Type",

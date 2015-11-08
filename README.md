@@ -50,7 +50,6 @@ When you have the perquisites in place you can follow the steps below to get the
 - Server Config
 	- configLinny.json (configures the server and where the ad directory)
 
-
 - Ad Directory
 	- configAd.json (the ad configuration)
 	- assets (directory for all creative code)
@@ -67,7 +66,7 @@ Start the linny ad server:
 linny -serve
 ```
 ```
-linny -serve - bind=":8000"
+linny -serve -bind=":8000"
 ```
 ### Development
 Create a new server directory with example ad directory
