@@ -16,8 +16,8 @@ var timeNow time.Time
 
 func InjectLinks(adID string, content string, r *http.Request) string {
 
-	// fmt.Println(r.Host)
-	// fmt.Println(r.URL)
+	// log.Println(r.Host)
+	// log.Println(r.URL)
 	timeNow = time.Now()
 
 	host := r.Host
