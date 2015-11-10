@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"io"
+	"log"
 	"net"
 	"net/http"
 	"strconv"
@@ -63,12 +64,12 @@ func Conversions(ac *wrappers.AppContext, c web.C, w http.ResponseWriter, r *htt
 
 	referer := r.Header.Get("referer")
 
-	fmt.Println("Conversion Origin IP", originIP)
-	fmt.Println("Conversion Referer", referer)
-	fmt.Println("Conversion Gen Time", timeGen)
-	fmt.Println("Conversion adID", adID)
-	fmt.Println("Conversion Conversion Tag", conversionTag)
-	fmt.Println("Conversion Session", sessionID)
+	log.Println("Conversion Origin IP", originIP)
+	log.Println("Conversion Referer", referer)
+	log.Println("Conversion Gen Time", timeGen)
+	log.Println("Conversion adID", adID)
+	log.Println("Conversion Conversion Tag", conversionTag)
+	log.Println("Conversion Session", sessionID)
 
 	//Add to DB
 	ac.Data.AdConversions.Insert(adID, referer, originIP, conversionTag, sessionID)

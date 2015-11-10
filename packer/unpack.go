@@ -2,8 +2,8 @@ package packer
 
 import (
 	"archive/zip"
-	"fmt"
 	"io"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -19,16 +19,16 @@ func Unpack(conf common.ConfigLinny, adPackFile string) bool {
 	target, err := filepath.Abs(target)
 	if err != nil {
 		if _, err2 := os.Stat(target); os.IsNotExist(err2) {
-			fmt.Println("Invalid adpack file")
+			log.Println("Invalid adpack file")
 		}
 		return false
 	}
 	dest := strings.TrimSuffix(target, ".adpack")
-	fmt.Println(target, dest)
+	log.Println(target, dest)
 
 	err2 := unzip(target, dest)
 	if err2 != nil {
-		fmt.Println("Unzip Error:", err2)
+		log.Println("Unzip Error:", err2)
 		return false
 	}
 	confP := &conf

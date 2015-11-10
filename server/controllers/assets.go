@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net"
 	"net/http"
 	"path/filepath"
@@ -21,28 +22,28 @@ import (
 
 func AssetHTML(ac *wrappers.AppContext, sID string, c web.C, w http.ResponseWriter, r *http.Request) (int, error) {
 
-	fmt.Println("Requested: ", r.URL.Path[1:])
-	// fmt.Println(r.Proto)
-	// fmt.Println(r.Host)
-	// fmt.Println(r.URL)
+	log.Println("Requested: ", r.URL.Path[1:])
+	// log.Println(r.Proto)
+	// log.Println(r.Host)
+	// log.Println(r.URL)
 
 	fileReq := c.URLParams["file"]
 
 	fileAbs, err := common.ResolveSecure(ac.ConfLinny.ContentRoot+"/"+paths.AssetsDir, fileReq)
 	if err != nil {
-		fmt.Println("Secure Resolve Failed: ", err)
+		log.Println("Secure Resolve Failed: ", err)
 		return 404, errors.New("Secure Resolve Failed: " + err.Error())
 	}
 	exists, fileAbs := common.FileExistsHTML(fileAbs)
 	if !exists {
-		fmt.Println("File Does Not Exist: ", fileAbs)
+		log.Println("File Does Not Exist: ", fileAbs)
 		return 404, errors.New("File Does Not Exist " + fileAbs)
 	}
 
 	//Metrics collection
 	originIP, _, err := net.SplitHostPort(r.RemoteAddr)
 	if err != nil {
-		fmt.Println("IP error")
+		log.Println("IP error")
 		originIP = ""
 	}
 	referer := r.Header.Get("referer")
@@ -51,7 +52,7 @@ func AssetHTML(ac *wrappers.AppContext, sID string, c web.C, w http.ResponseWrit
 	//Content Processing and rendering
 	content, err := getWrappedContent(fileAbs, ac.ConfLinny.ContentRoot, ac.ConfAd.Id, r)
 	if err != nil {
-		fmt.Println("Content Error: ", err)
+		log.Println("Content Error: ", err)
 		http.NotFound(w, r)
 		return 502, errors.New("Content Error: " + err.Error())
 	}
@@ -69,7 +70,7 @@ func AssetFiles(ac *wrappers.AppContext, sID string, c web.C, w http.ResponseWri
 
 	absBaseDir, _ := filepath.Abs(ac.ConfLinny.ContentRoot)
 	fileServeDir := absBaseDir + "/" + paths.AssetsDir
-	fmt.Println(fileServeDir)
+	log.Println(fileServeDir)
 	handle := http.FileServer(http.Dir(fileServeDir))
 
 	handle.ServeHTTP(w, r)

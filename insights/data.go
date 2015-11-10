@@ -2,38 +2,38 @@ package insights
 
 import (
 	"database/sql"
-	"fmt"
+	"log"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/mattn/go-sqlite3" //Database driver
 )
 
 type Data struct {
-	connection      *sql.DB
-	AdDownloads     *AdDownloads
-	AdViews         *AdViews
-	AdClickThroughs *AdClickThroughs
-	AdConversions   *AdConversions
+	db              *sql.DB
+	AdDownloads     AdDownloadsTable
+	AdViews         AdViewsTable
+	AdClickThroughs AdClickThroughsTable
+	AdConversions   AdConversionsTable
 }
 
 func (d *Data) Init() {
 
-	fmt.Println("Data INIT")
+	log.Println("Data INIT")
 
 	db, err := sql.Open("sqlite3", "./insights.db")
 	checkErr(err)
-	d.connection = db
+	d.db = db
 
-	d.AdDownloads = new(AdDownloads)
-	d.AdDownloads.Init(d.connection)
+	d.AdDownloads = &AdDownloadsSQLLite{db: db}
+	d.AdDownloads.Init()
 
-	d.AdViews = new(AdViews)
-	d.AdViews.Init(d.connection)
+	d.AdViews = &AdViewsSQLLite{db: db}
+	d.AdViews.Init()
 
-	d.AdClickThroughs = new(AdClickThroughs)
-	d.AdClickThroughs.Init(d.connection)
+	d.AdClickThroughs = &AdClickThroughsSQLLite{db: db}
+	d.AdClickThroughs.Init()
 
-	d.AdConversions = new(AdConversions)
-	d.AdConversions.Init(d.connection)
+	d.AdConversions = &AdConversionsSQLLite{db: db}
+	d.AdConversions.Init()
 
 }
 
@@ -44,5 +44,5 @@ func checkErr(err error) {
 }
 
 func (d *Data) Close() {
-	d.connection.Close()
+	d.db.Close()
 }

@@ -121,7 +121,7 @@ This configuration file is specific to the ad or campaign itself.
 ### Internal Resources References
 Ad creatives usually rely on loading a number of assets and resources. To ensure they resolve to the correct address, absolute urls are generated using the following syntax.
 - Single quotes and double quotes are supported.
-- "ilk" stands for internal link
+- "ilk" stands for Internal Link
 
 ```js
 {{ilk "someAsset.png" }}
@@ -135,6 +135,8 @@ Example usage inside your HTML ad:
 
 ### Click-through Links with Tracking
 To track when users click on an ad you can use the following code to track the clicks. Appropriate conversion attribution can be tracked as per the conversion tagging section.
+- Single quotes and double quotes are supported.
+- "mlk" stands for Metrics Link
 
 ```js
 {{mlk "http://www.testURL.com" tag="testTAG"}}

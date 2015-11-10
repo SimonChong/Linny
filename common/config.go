@@ -3,8 +3,8 @@ package common
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/ioutil"
+	"log"
 	"path/filepath"
 )
 
@@ -28,28 +28,28 @@ func (c *ConfigLinny) Init() error {
 
 	confStr, err := ioutil.ReadFile("configLinny.json")
 	if err != nil {
-		fmt.Println("configLinny.json is missing")
+		log.Println("configLinny.json is missing")
 		return err
 	}
 	err = json.Unmarshal(confStr, c)
 	if err != nil {
-		fmt.Println("configLinny.json error:", err)
+		log.Println("configLinny.json error:", err)
 		return err
 	}
 
 	c.ContentRoot, err = filepath.Abs(c.ContentRoot)
 	if err != nil {
-		fmt.Println("ContentRoot Error: ", err)
+		log.Println("ContentRoot Error: ", err)
 		return err
 	}
-	// fmt.Println("ContentRoot: ", c.ContentRoot)
+	// log.Println("ContentRoot: ", c.ContentRoot)
 	return nil
 }
 
 func (c *ConfigLinny) Save() {
 	data, err := json.MarshalIndent(c, "", "\t")
 	if err != nil {
-		fmt.Println("Martial Error", err)
+		log.Println("Martial Error", err)
 		return
 	}
 	ioutil.WriteFile("configLinny.json", data, 0777)
@@ -70,17 +70,17 @@ func (c *ConfigAd) Init(cl *ConfigLinny) error {
 	fileStr := cl.ContentRoot + "/configAd.json"
 	confStr, err := ioutil.ReadFile(fileStr)
 	if err != nil {
-		fmt.Println("configAd.json is missing")
+		log.Println("configAd.json is missing")
 		return err
 	}
 	err = json.Unmarshal(confStr, c)
 	if err != nil {
-		fmt.Println("configAd.json error:", err)
+		log.Println("configAd.json error:", err)
 		return err
 	}
 
 	if c.Id == "" {
-		fmt.Println("configAd.json error: Id field is missing")
+		log.Println("configAd.json error: Id field is missing")
 		return errors.New("configAd.json error: Id field is missing")
 	}
 	return nil

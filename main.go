@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"fmt"
+	"log"
 
 	"github.com/simonchong/linny/common"
 	"github.com/simonchong/linny/creator"
@@ -23,7 +23,7 @@ func main() {
 	if flags.ConfigNeeded() {
 		configLinny, e1 := common.LoadConfigLinny()
 		if e1 != nil {
-			fmt.Println("ConfigLinny Error:", e1)
+			log.Println("ConfigLinny Error:", e1)
 			return
 		}
 		if flags.Pack {
@@ -41,7 +41,7 @@ func main() {
 			defer data.Close()
 
 			if e2 != nil {
-				fmt.Println("ConfigAd Error:", e2)
+				log.Println("ConfigAd Error:", e2)
 				return
 			}
 			server.Start(&configLinny, &configAd, data)

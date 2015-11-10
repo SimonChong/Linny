@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net"
 	"net/http"
 
@@ -30,19 +29,16 @@ func ClickTracking(ac *wrappers.AppContext, sID string, c web.C, w http.Response
 
 	conversions.AddCookie(w, r, adID)
 
-	fmt.Println("Link Path: ", r.URL.Path[1:])
-	fmt.Println("Link Gen Time: ", timeGen)
-	fmt.Println("Link ADID: ", adID)
-	fmt.Println("Link Click Through: ", destLink)
-	fmt.Println("Link Tag: ", tag)
-	fmt.Println("Link Referer: ", referer)
-	fmt.Println("Link SessionID", sID)
+	// log.Println("Link Path: ", r.URL.Path[1:])
+	// log.Println("Link Gen Time: ", timeGen)
+	// log.Println("Link ADID: ", adID)
+	// log.Println("Link Click Through: ", destLink)
+	// log.Println("Link Tag: ", tag)
+	// log.Println("Link Referer: ", referer)
+	// log.Println("Link SessionID", sID)
 
 	ac.Data.AdClickThroughs.Insert(adID, referer, destLink, originIP,
 		timeGen, tag, sID)
-
-	//TODO redirect 301 to u
-	// http.Redirect(w, r, destLink, http.StatusFound)
 
 	return 301, nil
 }

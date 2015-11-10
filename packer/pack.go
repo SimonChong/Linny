@@ -2,9 +2,9 @@ package packer
 
 import (
 	"archive/zip"
-	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"path"
 	// "log"
 	"os"
@@ -12,7 +12,7 @@ import (
 )
 
 func Pack(f string) {
-	fmt.Println("Packing: ", f)
+	log.Println("Packing: ", f)
 
 	zip := new(AdPackFile)
 	zip.Create(path.Base(f))
