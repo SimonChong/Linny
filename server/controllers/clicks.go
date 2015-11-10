@@ -27,7 +27,7 @@ func ClickTracking(ac *wrappers.AppContext, sID string, c web.C, w http.Response
 	tag := r.FormValue("t")
 	referer := r.Header.Get("referer")
 
-	conversions.AddCookie(w, r, adID)
+	conversions.AddCookie(w, adID)
 
 	// log.Println("Link Path: ", r.URL.Path[1:])
 	// log.Println("Link Gen Time: ", timeGen)

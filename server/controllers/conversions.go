@@ -4,7 +4,6 @@ import (
 	"encoding/base64"
 	"fmt"
 	"io"
-	"log"
 	"net"
 	"net/http"
 	"strconv"
@@ -65,15 +64,15 @@ func Conversions(ac *wrappers.AppContext, c web.C, w http.ResponseWriter, r *htt
 
 	referer := r.Header.Get("referer")
 
-	log.Println("Conversion Origin IP", originIP)
-	log.Println("Conversion Referer", referer)
-	log.Println("Conversion Gen Time", timeGen)
-	log.Println("Conversion adID", adID)
-	log.Println("Conversion Conversion Tag", conversionTag)
-	log.Println("Conversion Session", sessionID)
+	// log.Println("Conversion Origin IP: ", originIP)
+	// log.Println("Conversion Referer: ", referer)
+	// log.Println("Conversion Gen Time: ", timeGen)
+	// log.Println("Conversion adID: ", adID)
+	// log.Println("Conversion Conversion Tag: ", conversionTag)
+	// log.Println("Conversion Session: ", sessionID)
 
 	//Add to DB
-	ac.Data.AdConversions.Insert(adID, referer, originIP, conversionTag, sessionID)
+	ac.Data.AdConversions.Insert(adID, referer, originIP, timeGen, conversionTag, sessionID)
 
 	//Send GIF response
 	gif, _ := base64.StdEncoding.DecodeString("R0lGODlhAQABAIABAP///wAAACwAAAAAAQABAAACAkQBADs=")

@@ -20,7 +20,7 @@ func (c *AdClickThroughsSQLLite) Init() {
 	sql := `CREATE TABLE IF NOT EXISTS "AdClickThroughs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, "created" DATETIME DEFAULT CURRENT_TIMESTAMP, "adID" VARCHAR, "refererURL" VARCHAR, "destinationURL" VARCHAR, "originIP" VARCHAR, "linkGeneratedOn" DATETIME, "linkTag" VARCHAR, "sessionID" VARCHAR);`
 	c.db.Exec(sql)
 
-	ins, err := c.db.Prepare(`INSERT INTO AdClickThroughs( adID, refererURL, destinationURL, originIP, linkGeneratedOn, linkTag, sessionID) values(?,?,?,?,?,?,?)`)
+	ins, err := c.db.Prepare(`INSERT INTO AdClickThroughs(adID, refererURL, destinationURL, originIP, linkGeneratedOn, linkTag, sessionID) values(?,?,?,?,?,?,?)`)
 	checkErr(err)
 	c.insert = ins
 

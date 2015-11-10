@@ -1,10 +1,13 @@
 package insights
 
-import "database/sql"
+import (
+	"database/sql"
+	"time"
+)
 
 type AdConversionsTable interface {
 	Init()
-	Insert(adID string, refererURL string, originIP string, conversionTag string, sessionID string) (sql.Result, error)
+	Insert(adID string, refererURL string, originIP string, jsGeneratedOn time.Time, conversionTag string, sessionID string) (sql.Result, error)
 }
 
 type AdConversionsSQLLite struct {
@@ -14,15 +17,15 @@ type AdConversionsSQLLite struct {
 
 func (c *AdConversionsSQLLite) Init() {
 
-	sql := `CREATE TABLE IF NOT EXISTS "AdConversions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, "created" DATETIME DEFAULT CURRENT_TIMESTAMP, "adID" VARCHAR, "refererURL" VARCHAR, "originIP" VARCHAR, "conversionTag" VARCHAR, "sessionID" VARCHAR);`
+	sql := `CREATE TABLE IF NOT EXISTS "AdConversions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, "created" DATETIME DEFAULT CURRENT_TIMESTAMP, "adID" VARCHAR, "refererURL" VARCHAR, "originIP" VARCHAR, "jsGeneratedOn" DATETIME, "conversionTag" VARCHAR, "sessionID" VARCHAR);`
 	c.db.Exec(sql)
 
-	ins, err := c.db.Prepare(`INSERT INTO AdConversions(adID, refererURL, originIP, conversionTag, sessionID) values(?,?,?,?,?)`)
+	ins, err := c.db.Prepare(`INSERT INTO AdConversions(adID, refererURL, originIP, jsGeneratedOn, conversionTag, sessionID) values(?,?,?,?,?,?)`)
 	checkErr(err)
 	c.insert = ins
 }
 
-func (c *AdConversionsSQLLite) Insert(adID string, refererURL string, originIP string, conversionTag string, sessionID string) (sql.Result, error) {
+func (c *AdConversionsSQLLite) Insert(adID string, refererURL string, originIP string, jsGeneratedOn time.Time, conversionTag string, sessionID string) (sql.Result, error) {
 
 	res, err := c.insert.Exec(adID, refererURL, originIP, conversionTag, sessionID)
 	checkErr(err)

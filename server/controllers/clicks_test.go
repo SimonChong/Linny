@@ -8,16 +8,10 @@ import (
 	"time"
 
 	"github.com/simonchong/linny/insights"
+	"github.com/simonchong/linny/insights/datatest"
 	"github.com/simonchong/linny/server/wrappers"
 	"github.com/zenazn/goji/web"
 )
-
-// var mockReq = &http.Request{URL: &url.URL{Host: "TestHost", Path: "TestPath/"}, Host: "TestHost"}
-
-type mockDBResult struct{}
-
-func (m *mockDBResult) LastInsertId() (int64, error) { return 1, nil }
-func (m *mockDBResult) RowsAffected() (int64, error) { return 1, nil }
 
 type mockACTable struct {
 	data map[string]string
@@ -32,7 +26,7 @@ func (m *mockACTable) Insert(adID string, refererURL string, destinationURL stri
 	m.data["linkGeneratedOn"] = linkGeneratedOn.String()
 	m.data["linkTag"] = linkTag
 	m.data["sessionID"] = sessionID
-	return &mockDBResult{}, nil
+	return &datatest.MockDBResult{1, 1}, nil
 }
 
 func TestClickTracking(t *testing.T) {
