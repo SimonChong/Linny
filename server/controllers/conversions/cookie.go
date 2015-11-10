@@ -7,14 +7,17 @@ import (
 
 const conversionCookie = "lC"
 
-func AddCookie(w http.ResponseWriter, r *http.Request, adID string) {
-	ck := &http.Cookie{
+func NewCookie(adID string) *http.Cookie {
+	return &http.Cookie{
 		Name:    conversionCookie,
 		Value:   adID,
 		Path:    "/",
 		Expires: time.Now().Add(time.Hour * 24 * 7),
 	}
-	http.SetCookie(w, ck)
+}
+
+func AddCookie(w http.ResponseWriter, adID string) {
+	http.SetCookie(w, NewCookie(adID))
 }
 
 func GetCookie(r *http.Request) (string, error) {

@@ -15,6 +15,7 @@ import (
 	"github.com/simonchong/linny/server/controllers/conversions"
 	"github.com/simonchong/linny/server/controllers/resources"
 	"github.com/simonchong/linny/server/paths"
+	"github.com/simonchong/linny/server/session"
 	"github.com/simonchong/linny/server/wrappers"
 	"github.com/zenazn/goji/web"
 )
@@ -54,7 +55,7 @@ func Conversions(ac *wrappers.AppContext, c web.C, w http.ResponseWriter, r *htt
 		return http.StatusOK, errT
 	}
 
-	sessionID, errS := wrappers.GetSessionCookie(r)
+	sessionID, errS := session.GetSessionCookie(r)
 	if errS != nil {
 		return http.StatusOK, errS
 	}
