@@ -60,7 +60,10 @@ func Conversions(ac *wrappers.AppContext, c web.C, w http.ResponseWriter, r *htt
 	}
 
 	conversionTag := r.FormValue("t")
-	//TODO limit to 255 characters
+	//Limit to 64 characters
+	if len(conversionTag) > 64 {
+		conversionTag = conversionTag[:64]
+	}
 
 	referer := r.Header.Get("referer")
 

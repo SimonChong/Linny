@@ -67,11 +67,14 @@ func TestClickTracking(t *testing.T) {
 	if mockTable.data["sessionID"] != "12345" {
 		t.Errorf("sessionID: %s", mockTable.data["sessionID"])
 	}
-	//TEST it redirects 301
+	//TEST it redirects 302
 	if err != nil {
 		t.Errorf("Error: %s", err)
 	}
-	if code != 301 {
+	if code != 302 {
 		t.Errorf("Status: %d", code)
+	}
+	if len(w.HeaderMap["Location"]) > 0 && w.HeaderMap["Location"][0] != "http://www.test.test" {
+		t.Errorf("Redirect is incorrect: %s", w.HeaderMap["Location"])
 	}
 }

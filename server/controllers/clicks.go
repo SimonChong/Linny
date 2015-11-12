@@ -40,5 +40,7 @@ func ClickTracking(ac *wrappers.AppContext, sID string, c web.C, w http.Response
 	ac.Data.AdClickThroughs.Insert(adID, referer, destLink, originIP,
 		timeGen, tag, sID)
 
-	return 301, nil
+	http.Redirect(w, r, destLink, http.StatusFound)
+
+	return 302, nil
 }

@@ -160,6 +160,7 @@ document.body.appendChild(s);
 ```
 
 - Replace "YOURTAG" with a label describing the conversion
+	- Tags are limited to 64 characters in length
 - Replace "localhost:8000" with the domain of your ad server
 - Using different tags will allow you to track multiple conversions
 

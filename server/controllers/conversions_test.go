@@ -78,3 +78,36 @@ func TestConversions(t *testing.T) {
 		t.Errorf("Error - sessionID : %s", mockTable.data["sessionID"])
 	}
 }
+
+func TestConversionsTagLimit(t *testing.T) {
+
+	var mockTable = &mockConTable{map[string]string{}}
+	var mockData = &insights.Data{AdConversions: mockTable}
+	var mockAppContext = &wrappers.AppContext{Data: mockData}
+	var mockReq, _ = http.NewRequest("GET", "/m/k", nil)
+	mockReq.RemoteAddr = "127.0.0.1:80"
+	mockReq.Form = map[string][]string{
+		"g": []string{"1447100000"},
+		"a": []string{"ADID123"},
+		"l": []string{"http://www.test.test"},
+		"t": []string{"123456678123456678123456678123456678123456678123456678123456678123456678123456678123456678123456678123456678123456678123456678123456678"},
+	}
+	var sessionID = session.MakeSessionID()
+	mockReq.AddCookie(conversions.NewCookie("ADID123"))
+	mockReq.AddCookie(session.MakeSessionCookie(sessionID))
+	mockReq.Header.Add("Referer", "http://test.test")
+
+	var w = httptest.NewRecorder()
+
+	var code, err = Conversions(mockAppContext, web.C{}, w, mockReq)
+	if err != nil {
+		t.Errorf("Error: %s", err)
+	}
+	if code != 200 {
+		t.Errorf("Status: %d", code)
+	}
+	if len(mockTable.data["conversionTag"]) > 64 {
+		t.Errorf("Error - conversionTag : %s", mockTable.data["conversionTag"])
+	}
+
+}
