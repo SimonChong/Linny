@@ -3,7 +3,6 @@ package controllers
 import (
 	"encoding/base64"
 	"io"
-	"log"
 	"net"
 	"net/http"
 
@@ -25,11 +24,11 @@ func ViewCounter(ac *wrappers.AppContext, sID string, c web.C, w http.ResponseWr
 	}
 	referer := r.Header.Get("referer")
 
-	log.Println("View ADID", adID)
-	log.Println("View Origin IP", originIP)
-	log.Println("View Gen Time", timeGen)
-	log.Println("View Referer", referer)
-	log.Println("View SessionID", sID)
+	// log.Println("View ADID", adID)
+	// log.Println("View Origin IP", originIP)
+	// log.Println("View Gen Time", timeGen)
+	// log.Println("View Referer", referer)
+	// log.Println("View SessionID", sID)
 
 	//Add to DB
 	ac.Data.AdViews.Insert(adID, referer, originIP, timeGen, sID)
