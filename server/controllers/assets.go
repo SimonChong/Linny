@@ -22,7 +22,7 @@ import (
 
 func AssetHTML(ac *wrappers.AppContext, sID string, c web.C, w http.ResponseWriter, r *http.Request) (int, error) {
 
-	log.Println("Requested: ", r.URL.Path[1:])
+	// log.Println("Requested: ", r.URL.Path[1:])
 	// log.Println(r.Proto)
 	// log.Println(r.Host)
 	// log.Println(r.URL)
