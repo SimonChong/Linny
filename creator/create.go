@@ -6,7 +6,14 @@ import (
 	"strings"
 
 	"github.com/satori/go.uuid"
+	"github.com/simonchong/linny/creator/resources"
 )
+
+//go:generate wgf -i=../resources/creator/header.frag -o=./resources/headerFrag.go -p=resources -c=HeaderFrag
+//go:generate wgf -i=../resources/creator/footer.frag -o=./resources/footerFrag.go -p=resources -c=FooterFrag
+//go:generate wgf -i=../resources/creator/configLinny.json -o=./resources/configLinnyJSON.go -p=resources -c=ConfigLinnyJSON
+//go:generate wgf -i=../resources/creator/configAd.json -o=./resources/configAdJSON.go -p=resources -c=ConfigAdJSON
+//go:generate wgf -i=../resources/creator/index.html -o=./resources/indexHTML.go -p=resources -c=IndexHTML
 
 func Create(adDirName string) {
 
@@ -16,30 +23,21 @@ func Create(adDirName string) {
 	}
 	os.Mkdir(adDirName, os.ModePerm)
 	ioutil.WriteFile(adDirName+"/configAd.json", []byte(configAd()), os.ModePerm)
-	ioutil.WriteFile(adDirName+"/header.frag", []byte(headerFrag), os.ModePerm)
-	ioutil.WriteFile(adDirName+"/footer.frag", []byte(footerFrag), os.ModePerm)
+	ioutil.WriteFile(adDirName+"/header.frag", []byte(resources.HeaderFrag), os.ModePerm)
+	ioutil.WriteFile(adDirName+"/footer.frag", []byte(resources.FooterFrag), os.ModePerm)
 	os.Mkdir(adDirName+"/assets", os.ModePerm)
-	ioutil.WriteFile(adDirName+"/assets/index.html", []byte(index), os.ModePerm)
+	ioutil.WriteFile(adDirName+"/assets/index.html", []byte(resources.IndexHTML), os.ModePerm)
 }
 
 func configLinny(adDir string) string {
-	return `{
-    "ContentRoot": "./` + adDir + `"
-}`
+
+	return strings.Replace(resources.ConfigLinnyJSON, "{{DIR}}", adDir, -1)
+
 }
 
 func configAd() string {
 
-	return `{
-	"Id" : "` + strings.Replace(uuid.NewV1().String(), "-", "", -1) + `",
-	"Name": "Example Campaign",
-	"HeaderFrag" : "header.frag",
-	"FooterFrag" : "footer.frag"
-}`
+	uuid := strings.Replace(uuid.NewV1().String(), "-", "", -1)
+	return strings.Replace(resources.ConfigAdJSON, "{{ID}}", uuid, -1)
+
 }
-
-var headerFrag = `<html>`
-
-var footerFrag = `</html>`
-
-var index = `<div>Hello World</div>`

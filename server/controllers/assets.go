@@ -20,6 +20,8 @@ import (
 	"github.com/zenazn/goji/web"
 )
 
+//go:generate wgf -i=../../resources/tracking.js -o=./resources/trackingJS.go -p=resources -c=TrackingJS
+
 func AssetHTML(ac *wrappers.AppContext, sID string, c web.C, w http.ResponseWriter, r *http.Request) (int, error) {
 
 	// log.Println("Requested: ", r.URL.Path[1:])
@@ -76,8 +78,6 @@ func AssetFiles(ac *wrappers.AppContext, sID string, c web.C, w http.ResponseWri
 	handle.ServeHTTP(w, r)
 	return 200, nil
 }
-
-//go:generate wgf -i=../../resources/tracking.js -o=./resources/trackingJS.go -p=resources -c=TrackingJS
 
 func getTrackingCode(adID string, host string) string {
 	unix := strconv.FormatInt(time.Now().Unix(), 10)

@@ -1,0 +1,6 @@
+{
+	"Id" : "{{ID}}",
+	"Name": "Example Campaign",
+	"HeaderFrag" : "header.frag",
+	"FooterFrag" : "footer.frag"
+}
