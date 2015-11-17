@@ -223,6 +223,39 @@ body {
 
 ## Deploying to Production
 
+### Upstart script
+To keep the server up, even after restarting add the following upstart script.
+
+- Create a file called "linny.conf" in the ```/etc/init/``` directory. Paste the following into your terminal to create it.
+- Edit the paths to ensure it works for your ads.
+
+```bash
+cat >/etc/init/linny.conf <<EOL
+description "Linny Ad Server"
+author      "Simon Chong"
+
+start on filesystem or runlevel [2345]
+stop on runlevel [!2345]
+
+# Automatically Respawn:
+respawn
+respawn limit 99 5
+
+# Max open files are @ 1024 by default. Bit few.
+limit nofile 32768 32768
+
+script
+    export PATH=$PATH:/usr/local/go/bin
+    export GOPATH=/go
+    export PATH=$PATH:/go/bin
+
+    cd /PATH_TO_YOUR_LINNY_BASE_DIR
+    exec linny -serve >> /var/log/linny.log 2>&1
+end script
+EOL
+
+```
+
 
 ## About
 
