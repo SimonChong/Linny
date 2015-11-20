@@ -1,4 +1,4 @@
-# Linny (Work in progress)
+# Linny (pre alpha)
 **A light-weight and simple micro ad server**
 
 Linny is a light weight and simple micro ad server that is designed to serve one web display ad or campaign. It can measure simple but important statistics, such as views and conversion via click-throughs.
@@ -22,7 +22,7 @@ The following are guiding principles used to design and build this system.
 4. It is designed to only serve one web display ad or ad campaign (a group of ads of related ads).
 5. It should be quick to configure and deploy (~10 minuites)
 
-## Prerequsites
+## Prerequisites
 
 1. A server with a recent copy of Linux installed
 2. GoLang installed and configured
@@ -210,16 +210,163 @@ body {
 6. Run ```linny -serve```
 7. Open our browser and go to ```localhost:8000```
 
+8. Embedding it into a publisher's site can be done using an iframe as per the below code. This also works with other Ad Servers such as Double Click for Publishers.
+
+```html
+<iframe src="//YOUR_DOMAIN/"></iframe>
+```
+
 
 ### Building a Display Ad Campaign
 
+1. Install Linny
+2. Create a folder called "AdCampaign"
+3. Run "linny -init" this will initialize and create a blank ad
+
+
 #### Medium Rectangle Ad 300x250
+
+Please refer to the the section above.
+
 #### Half Page Ad 300x600
+
+1. Create a file named ```half_page.html``` in the AdCampaign/newAdDir/assets directory.
+2. Edit ```half_page.html``` with your favorite text editor and add code until it looks like the following:
+
+```html
+<style type="text/css">
+body {
+    font-family: Arial, sans-serif;
+}
+
+#halfpage {
+    display: block;
+    width: 300px;
+    height: 600px;
+    color: white;
+    background-color: black;
+    margin: 0 auto;
+}
+
+.title {
+    text-align: center;
+    font-size: 40px;
+    padding: 15px;
+}
+</style>
+<div id="halfpage">
+    <div class="title">
+        Half Page 300x600
+    </div>
+</div>
+```
+
+3. Embedding it into a publisher's site can be done using an iframe as per the below code. This also works with other Ad Servers such as Double Click for Publishers.
+
+```html
+<iframe src="//YOUR_DOMAIN/half_page.html"></iframe>
+```
+
 #### Banner Ad 728x90
+
+1. Create a file named ```banner.html``` in the AdCampaign/newAdDir/assets directory.
+2. Edit ```banner.html``` with your favorite text editor and add code until it looks like the following:
+
+```html
+<style type="text/css">
+body {
+    font-family: Arial, sans-serif;
+}
+
+#banner {
+    display: block;
+    width: 728px;
+    height: 90px;
+    color: white;
+    background-color: black;
+    margin: 0 auto;
+}
+
+.title {
+    text-align: center;
+    font-size: 40px;
+    padding: 15px;
+}
+</style>
+<div id="banner">
+    <div class="title">
+        Banner Ad 728x90
+    </div>
+</div>
+```
+
+3. Embedding it into a publisher's site can be done using an iframe as per the below code. This also works with other Ad Servers such as Double Click for Publishers.
+
+```html
+<iframe src="//YOUR_DOMAIN/banner.html"></iframe>
+```
+
 #### Mobile Banner Ad 320x50
+
+1. Create a file named ```banner.html``` in the AdCampaign/newAdDir/assets directory.
+2. Edit ```banner.html``` with your favorite text editor and add code until it looks like the following:
+
+```html
+<style type="text/css">
+body {
+    font-family: Arial, sans-serif;
+}
+
+#banner {
+    display: block;
+    width: 728px;
+    height: 90px;
+    color: white;
+    background-color: black;
+    margin: 0 auto;
+}
+
+.title {
+    text-align: center;
+    font-size: 40px;
+    padding: 15px;
+}
+</style>
+<div id="banner">
+    <div class="title">
+        Banner Ad 728x90
+    </div>
+</div>
+```
+
+3. Embedding it into a publisher's site can be done using an iframe as per the below code. This also works with other Ad Servers such as Double Click for Publishers.
+
+```html
+<iframe src="//YOUR_DOMAIN/banner.html"></iframe>
+```
+
 #### Wallpaper Ad (Advanced)
 
+1. Before creating a wallpaper ad its best to ask the publisher how this can be best achieved using their styles. It's more than likely that there is a JavaScript function that you can use to "hook" into to set the wallpaper / background image.
 
+2. Create a wallpaper image called ```wallpaper.jpg``` and put it in the AdCampaign/newAdDir/assets directory.
+	- A jpeg ".jpg" image is usually best.
+	- It should have a width of 1024 and wider depending on the publisher's site.
+
+3. Create a JavaScript file called ```wallpaper.js``` in AdCampaign/newAdDir/assets directory.
+
+2. Edit ```wallpaper.js``` with your favorite text editor and add code until it looks like the following:
+
+```js
+(function(){
+	var top = window.top || window, doc = top.document, body = doc.getElementsByTagName("body")[0];
+
+	body..style.backgroundImage = "//YOUR_DOMAIN/wallpaper.jpg"
+
+})();
+```
+
+4.
 
 ## Deploying to Production
 
@@ -227,7 +374,7 @@ body {
 To keep the server up, even after restarting add the following upstart script.
 
 - Create a file called "linny.conf" in the ```/etc/init/``` directory. Paste the following into your terminal to create it.
-- Edit the paths to ensure it works for your ads.
+- Edit the paths to ensure that they are correct based upon your configuration.
 
 ```bash
 cat >/etc/init/linny.conf <<EOL
