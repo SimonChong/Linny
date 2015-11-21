@@ -12,7 +12,6 @@ Linny is a light weight and simple micro ad server that is designed to serve one
 	- [Quick Start](#quick-start)
 	- [Ad Folder Structure](#ad-folder-structure)
 - [Linny Commands](#linny-commands)
-	- [Development](#development)
 - [Server Configuration](#server-configuration)
 - [Ad Development](#ad-development)
 	- [Internal Resources References](#internal-resources-references)
@@ -92,7 +91,7 @@ linny -serve
 ```
 linny -serve -bind=":8000"
 ```
-### Development
+#### Development
 Create a new server directory with example ad directory
 ```
 linny -init
