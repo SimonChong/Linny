@@ -4,18 +4,18 @@
 Linny is a light weight and simple micro ad server that is designed to serve one web display ad or campaign. It can measure simple but important statistics, such as views and conversion via click-throughs.
 
 # Table of Contents
-- [Features](## Features)
-- [Principles](## Principles)
-- [Prerequisites](## Prerequisites)
-- [Getting Started](## Getting Started)
-- [Linny Commands](## Linny Commands)
-- [Server Configuration](## Server Configuration)
-- [Ad Development](## Ad Development)
-- [Accessing the DATA](## Accessing the DATA)
-- [Display Ad Development Tutorials](## Display Ad Development Tutorials)
-- [Deploying to Production](## Deploying to Production)
-- [About](## About)
-- [Copyright and Licence](## Copyright and Licence)
+- [Features](#features)
+- [Principles](#principles)
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+- [Linny Commands](#linny-commands)
+- [Server Configuration](#server-configuration)
+- [Ad Development](#ad-development)
+- [Accessing the DATA](#accessing-the-data)
+- [Display Ad Development Tutorials](#display-ad-development-tutorials)
+- [Deploying to Production](#deploying-to-production)
+- [About](#about)
+- [Copyright and Licence](#copyright-and-licence)
 
 ## Features
 
