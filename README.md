@@ -3,6 +3,20 @@
 
 Linny is a light weight and simple micro ad server that is designed to serve one web display ad or campaign. It can measure simple but important statistics, such as views and conversion via click-throughs.
 
+# Table of Contents
+- [Features](## Features)
+- [Principles](## Principles)
+- [Prerequisites](## Prerequisites)
+- [Getting Started](## Getting Started)
+- [Linny Commands](## Linny Commands)
+- [Server Configuration](## Server Configuration)
+- [Ad Development](## Ad Development)
+- [Accessing the DATA](## Accessing the DATA)
+- [Display Ad Development Tutorials](## Display Ad Development Tutorials)
+- [Deploying to Production](## Deploying to Production)
+- [About](## About)
+- [Copyright and Licence](## Copyright and Licence)
+
 ## Features
 
 * Serves one ad or ad campaign
@@ -97,7 +111,7 @@ The file name configLinny.json in the current working directory configures the s
 }
 ```
 
-- **ContentRoot** the directory of the ad or campaign exists
+- **ContentRoot** is the directory of the ad or campaign exists
 
 #### Ad Configuration
 This configuration file is specific to the ad or campaign itself.
@@ -117,6 +131,8 @@ This configuration file is specific to the ad or campaign itself.
 - **FooterFrag** location of the footer html fragment that wraps all HTML files
 
 ## Ad Development
+
+**The following tools are available only within HTML files.**
 
 ### Internal Resources References
 Ad creatives usually rely on loading a number of assets and resources. To ensure they resolve to the correct address, absolute urls are generated using the following syntax.
@@ -148,7 +164,7 @@ Example usage inside you HTML ad:
 ```
 
 ### Conversion Tagging
-This helps you track the effectiveness of your ad. After a user clicks on the ad, you can track if user bought something or did something by adding or loading the following script on that action.
+This helps you track the effectiveness of your ad. After a user clicks on the ad (using an MLK link), you can track if user bought something or did something by adding or triggering the following script on a page.
 
 
 ```html
@@ -168,6 +184,10 @@ document.body.appendChild(s);
 
 If you host an ad to sell something, putting this script on the thank you page after someone buys something will allow you to see how many people bought something after clicking on the ad i.e the conversion rate.
 
+
+## Accessing the DATA
+
+TODO
 
 ## Display Ad Development Tutorials
 
@@ -366,7 +386,7 @@ body {
 })();
 ```
 
-4.
+
 
 ## Deploying to Production
 
