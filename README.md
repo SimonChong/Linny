@@ -17,7 +17,8 @@ Linny is a light weight and simple micro ad server that is designed to serve one
 	- [Internal Resources References](#internal-resources-references)
 	- [Click-through Links with Tracking](#click-through-links-with-tracking)
 	- [Conversion Tagging](#conversion-tagging)
-- [Accessing the DATA](#accessing-the-data)
+- [Metrics and Data](#metrics-and-data)
+	- [Database Structure](#database-structure)
 - [Display Ad Development Tutorials](#display-ad-development-tutorials)
 	- [Building a Single Medium Rectangle (300x250) Display Ad](#building-a-single-medium-rectangle-300x250-display-ad)
 	- [Building a Display Ad Campaign](#building-a-display-ad-campaign)
@@ -25,6 +26,8 @@ Linny is a light weight and simple micro ad server that is designed to serve one
 	- [Upstart script](#upstart-script)
 - [About](#about)
 - [Copyright and Licence](#copyright-and-licence)
+
+
 
 ## Features
 
@@ -194,9 +197,21 @@ document.body.appendChild(s);
 If you host an ad to sell something, putting this script on the thank you page after someone buys something will allow you to see how many people bought something after clicking on the ad i.e the conversion rate.
 
 
-## Accessing the DATA
+## Metrics and Data
 
-TODO
+All data is inserted into an SQLLite database file called "insights.db". The file is located in your AdServer directory, the same directory as the configLinny.json file.
+
+To access it you will need a program to read SQLLite database files such as "SQLLite Manager" for Firefox.
+
+### Database Structure
+
+There are 4 database tables:
+
+- AdViews - Contains all occurrences of when an Ad was viewed. Measured using a standard analytics pixel.
+- AdDownloads - Contains all occurrences of when an Ad was downloaded. Measured from the server and is counted when an asset is downloaded.
+- AdConversion - Contains all occurrences of a conversion. Measured using a pixel and a cookie.
+- AdClickThroughs - Contains all occurrences of when a user clicks on a tracked link. Measured using a server side redirect.
+
 
 ## Display Ad Development Tutorials
 
