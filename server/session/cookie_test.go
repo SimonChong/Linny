@@ -23,7 +23,7 @@ func TestSetCookie(t *testing.T) {
 func TestGetCookie(t *testing.T) {
 
 	r, _ := http.NewRequest("GET", "/somePATH", nil)
-	sID := MakeSessionID()
+	sID := MakeIDSession()
 	cookie := MakeSessionCookie(sID)
 	r.AddCookie(cookie)
 

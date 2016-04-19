@@ -42,7 +42,7 @@ func TestViews(t *testing.T) {
 		"g": []string{"1447100000"},
 		"a": []string{"ADID123"},
 	}
-	var sessionID = session.MakeSessionID()
+	var sessionID = session.MakeIDSession()
 	mockReq.AddCookie(conversions.NewCookie("ADID123"))
 	mockReq.AddCookie(session.MakeSessionCookie(sessionID))
 	mockReq.Header.Add("Referer", "http://test.test")

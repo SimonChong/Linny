@@ -35,7 +35,7 @@ func ClickTracking(ac *wrappers.AppContext, sID string, c web.C, w http.Response
 	// log.Println("Link Click Through: ", destLink)
 	// log.Println("Link Tag: ", tag)
 	// log.Println("Link Referer: ", referer)
-	// log.Println("Link SessionID", sID)
+	// log.Println("Link IDSession", sID)
 
 	ac.Data.AdClickThroughs.Insert(adID, referer, destLink, originIP,
 		timeGen, tag, sID)

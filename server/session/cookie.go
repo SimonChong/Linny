@@ -10,7 +10,7 @@ import (
 
 const SessionCookieName = "lS"
 
-func MakeSessionID() string {
+func MakeIDSession() string {
 	return strings.Replace(uuid.NewV1().String(), "-", "", -1)
 }
 
@@ -26,7 +26,7 @@ func MakeSessionCookie(sessionID string) *http.Cookie {
 func SetSessionCookie(w http.ResponseWriter, r *http.Request) string {
 	sessionID, err := GetSessionCookie(r)
 	if err != nil {
-		sessionID = MakeSessionID()
+		sessionID = MakeIDSession()
 	}
 	http.SetCookie(w, MakeSessionCookie(sessionID))
 	return sessionID

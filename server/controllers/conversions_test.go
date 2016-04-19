@@ -44,7 +44,7 @@ func TestConversions(t *testing.T) {
 		"l": []string{"http://www.test.test"},
 		"t": []string{"TAG123"},
 	}
-	var sessionID = session.MakeSessionID()
+	var sessionID = session.MakeIDSession()
 	mockReq.AddCookie(conversions.NewCookie("ADID123"))
 	mockReq.AddCookie(session.MakeSessionCookie(sessionID))
 	mockReq.Header.Add("Referer", "http://test.test")
@@ -92,7 +92,7 @@ func TestConversionsTagLimit(t *testing.T) {
 		"l": []string{"http://www.test.test"},
 		"t": []string{"123456678123456678123456678123456678123456678123456678123456678123456678123456678123456678123456678123456678123456678123456678123456678"},
 	}
-	var sessionID = session.MakeSessionID()
+	var sessionID = session.MakeIDSession()
 	mockReq.AddCookie(conversions.NewCookie("ADID123"))
 	mockReq.AddCookie(session.MakeSessionCookie(sessionID))
 	mockReq.Header.Add("Referer", "http://test.test")
